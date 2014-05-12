@@ -1,0 +1,32 @@
+# Copyright (C) 2014 Easy Photo Album Latest Photos
+# This file is distributed under the same license as the Easy Photo Album Latest Photos package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Easy Photo Album Latest Photos 1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/latest-easy-photo-album\n"
+"POT-Creation-Date: 2014-05-12 23:05:07+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: latest-easy-photo-album.php:31
+msgid "The Latest_Easy_Photo_Album class has already been loaded."
+msgstr ""
+#. Plugin Name of the plugin/theme
+msgid "Easy Photo Album Latest Photos"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "This plugin makes it simple to get the latest photos from Easy Photo Album"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "ebinnion"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://manofhustle.com"
+msgstr ""
