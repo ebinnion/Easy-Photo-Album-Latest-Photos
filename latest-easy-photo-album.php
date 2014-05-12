@@ -37,9 +37,6 @@ class Latest_Easy_Photo_Album {
         wp_localize_script (
             'lightbox2-js',
             'lightboxSettings',
-            // array(
-            //     'test' => 1
-            // )
             array (
                 'wrapAround' => EasyPhotoAlbum::get_instance()->wraparound,
                 'showimagenumber' => EasyPhotoAlbum::get_instance()->showimagenumber,
