@@ -108,9 +108,30 @@ class Latest_Easy_Photo_Album {
             update_option( 'latest_epa_photos', self::$photos );
         }
     }
+
+    /**
+     * Will stringify an array of attributes and return it as a string
+     * @param  array $attrs associative array where key is attribute and value is the value
+     * @return string representing attributes
+     */
+    public static function expand_attrs( $attrs ) {
+        if( ! isset( $attrs ) ) {
+            return '';
+        }
+
+        $attributes = '';
+        foreach( $attrs as $key => $attr ) {
+            $attributes .= "$key='$attr'";
+        }
+
+        return $attributes;
+    }
+
     /**
      * Will return an array of media IDs, ordered from most to least recent,
      * of images that have been added to Easy Photo Albums.
+     * @param int number of Easy Photos to return
+     * @return array containing latest Easy Photo Albums photo IDs from most recent to least recent
      */
     public static function get_latest_epa_ids( $count = 10 ) {
 
@@ -130,6 +151,45 @@ class Latest_Easy_Photo_Album {
         return $latest;
     }
 
+    /**
+     * Will output the latest photos from Easy Photo Album
+     * @param  array $params {
+	 * 	string $container The tag to wrap the latest Easy Photo Album photos with
+	 * 	array $container_attrs An array of key value pairs where the key is the attribute and the value is the value
+	 * 	string $image_before Any HTML to be included before the anchor and image
+     *     string $image_after Any HTML to be included after the anchor and image
+     *     array $image_attrs An array of key value pairs where the key is the attribute and the value is the value
+	 * 	int $count The number of photos to output
+	 * }
+     */
+    public static function output_latest_epa_photos( $config = array() ) {
+        $defaults = array();
+        $defaults['container']       = isset( $config['container'] ) ? $config['container'] : 'div';
+        $defaults['container_attrs'] = isset( $config['container_attrs'] ) ? self::expand_attrs( $config['container_attrs'] ) : self::expand_attrs( array( 'class' => 'latest-photos' ) );
+        $defaults['image_before']    = isset( $config['image_before'] ) ? $config['image_before'] : '';
+        $default['image_after']      = isset( $config['image_after'] ) ? $config['image_after'] : '';
+        $defaults['image_attrs']     = isset( $config['image_attrs'] ) ? $config['image_attrs'] : array( 'class' => 'alignleft' );
+        $defaults['count']           = isset( $config['count'] ) ? $config['count'] : 10;
+
+        $photos = self::get_latest_epa_ids( $defaults['count'] );
+
+        if( ! empty( $photos ) ) {
+            echo "<{$defaults['container']} {$defaults['container_attrs']}>";
+
+            foreach( $photos as $photo ) {
+                echo $defaults['image_before'];
+                    $full = wp_get_attachment_image_src( $photo, 'full' );
+                    echo $defaults['image_before'];
+                    echo "<a href='{$full[0]}' data-lightbox='image-$photo'>";
+                        echo wp_get_attachment_image( $photo, 'thumbnail', false, $defaults['image_attrs'] );
+                    echo "</a>";
+                    echo $defaults['image_after'];
+                echo $default['image_after'];
+            }
+
+            echo "</{$defaults['container']}>";
+        }
+    }
 }
 
 new Latest_Easy_Photo_Album();
