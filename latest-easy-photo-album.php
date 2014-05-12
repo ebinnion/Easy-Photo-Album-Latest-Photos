@@ -30,8 +30,19 @@ class Latest_Easy_Photo_Album {
 
         wp_enqueue_script(
             'lightbox2-js',
-            plugins_url( 'js/lightbox2.min.jss' ),
+            plugins_url( 'js/lightbox2.min.js', __FILE__ ),
             array( 'jquery' )
+        );
+
+        wp_localize_script (
+            'lightbox2-js',
+            'lightboxSettings',
+            array (
+                'wrapAround' => EasyPhotoAlbum::get_instance()->wraparound,
+                'showimagenumber' => EasyPhotoAlbum::get_instance()->showimagenumber,
+                'albumLabel' => EasyPhotoAlbum::get_instance()->imagenumberformat,
+                'scaleLightbox' => EasyPhotoAlbum::get_instance()->scalelightbox
+            )
         );
     }
 
@@ -67,6 +78,10 @@ class Latest_Easy_Photo_Album {
         $latest = array();
 
         for ( $i = 0; $i < $count; $i++ ) {
+            if( ! isset( $reversed[ $i ] ) ) {
+                break;
+            }
+
             $latest[] = $reversed[ $i ];
         }
 
