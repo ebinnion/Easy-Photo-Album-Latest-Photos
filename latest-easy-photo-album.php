@@ -158,14 +158,18 @@ class Latest_Easy_Photo_Album {
 
         $args = wp_parse_args( $args, $defaults  );
 
-        $container_attrs = '';
-        foreach ( $args['container_attrs'] as $key => $attr ) {
-            $container_attrs .= "$key='$attr' ";
-        }
-
         $photos = self::get_latest_epa_ids( $args['count'] );
 
+        // Test whether there are photos as early as possible so that we don't have
+        // to add unnecessary processing
         if( ! empty( $photos ) ) {
+
+            // Stringify container_attrs
+            $container_attrs = '';
+            foreach ( $args['container_attrs'] as $key => $attr ) {
+                $container_attrs .= "$key='$attr' ";
+            }
+
             echo "<{$args['container']} $container_attrs>";
 
             foreach( $photos as $photo ) {
