@@ -27,7 +27,7 @@ class Latest_Easy_Photo_Album {
     function __construct() {
 
         // Enforces a single instance of this class.
-        if( isset( self::$instance ) ) {
+        if ( isset( self::$instance ) ) {
             wp_die( esc_html__( 'The Latest_Easy_Photo_Album class has already been loaded.', 'easy-photo-album-latest' ) );
         }
 
@@ -88,7 +88,7 @@ class Latest_Easy_Photo_Album {
         }
 
         // If we have access to Easy Photo Album's classes, let's use their member data.
-        if( class_exists( 'EPA_PostType' ) ) {
+        if ( class_exists( 'EPA_PostType' ) ) {
             $albumdata = isset( $_POST[ EPA_PostType::INPUT_NAME ]['albumdata'] ) ? $_POST[ EPA_PostType::INPUT_NAME ]['albumdata'] : '';
         } else {
             $albumdata = isset( $_POST['EasyPhotoAlbums']['albumdata'] ) ? $_POST['EasyPhotoAlbums']['albumdata'] : '';
@@ -96,35 +96,17 @@ class Latest_Easy_Photo_Album {
 
         $images = json_decode( stripslashes( $albumdata ), false );
 
-        if( ! empty( $images ) ) {
-            foreach( $images as $image ) {
+        if ( ! empty( $images ) ) {
+            foreach ( $images as $image ) {
 
                 // Only add image to array if the image ID is not already in array
-                if( ! in_array( $image->id, self::$photos ) ) {
+                if ( ! in_array( $image->id, self::$photos ) ) {
                     self::$photos[] = $image->id;
                 }
             }
 
             update_option( 'latest_epa_photos', self::$photos );
         }
-    }
-
-    /**
-     * Will stringify an array of attributes and return it as a string
-     * @param  array $attrs associative array where key is attribute and value is the value
-     * @return string representing attributes
-     */
-    public static function expand_attrs( $attrs ) {
-        if( ! isset( $attrs ) ) {
-            return '';
-        }
-
-        $attributes = '';
-        foreach( $attrs as $key => $attr ) {
-            $attributes .= "$key='$attr'";
-        }
-
-        return $attributes;
     }
 
     /**
@@ -141,7 +123,9 @@ class Latest_Easy_Photo_Album {
         $latest = array();
 
         for ( $i = 0; $i < $count; $i++ ) {
-            if( ! isset( $reversed[ $i ] ) ) {
+
+            // Ensure that we do not go past end of array
+            if ( ! isset( $reversed[ $i ] ) ) {
                 break;
             }
 
@@ -164,12 +148,12 @@ class Latest_Easy_Photo_Album {
      */
     public static function output_latest_epa_photos( $args = array() ) {
         $defaults = array(
-                'container' => 'div',
+                'container'       => 'div',
                 'container_attrs' => array( 'class' => 'latest-photos' ),
-                'image_attrs' => array( 'class' => 'alignleft' ),
-                'image_before' => '',
-                'image_after' => '',
-                'count' => 10
+                'image_attrs'     => array( 'class' => 'alignleft' ),
+                'image_before'    => '',
+                'image_after'     => '',
+                'count'           => 10
         );
 
         $args = wp_parse_args( $args, $defaults  );
