@@ -17,7 +17,7 @@ class Latest_Easy_Photo_Album {
     private static $instance = null;
 
     /**
-     * Used to story array of unique Easy Photo Album photo IDs
+     * Used to store array of unique Easy Photo Album photo IDs
      */
     private static $photos;
 
@@ -76,7 +76,7 @@ class Latest_Easy_Photo_Album {
 
     /**
      * Run when saving posts. Used to gather images that are added to Easy Photo Albums.
-     * Will only add image to photo array iff it is not already in the array.
+     * Will only add image to photo array if it is not already in the array.
      * Saves photos array to `latest_epa_photos`
      */
     function epa_save( $post_id, $post ) {
@@ -138,13 +138,13 @@ class Latest_Easy_Photo_Album {
     /**
      * Will output the latest photos from Easy Photo Album
      * @param  array $params {
-	 * 	string $container The tag to wrap the latest Easy Photo Album photos with
-	 * 	array $container_attrs An array of key value pairs where the key is the attribute and the value is the value
-	 * 	string $image_before Any HTML to be included before the anchor and image
+     *     string $container The tag to wrap the latest Easy Photo Album photos with
+     *     array $container_attrs An array of key value pairs where the key is the attribute and the value is the value
+     *     string $image_before Any HTML to be included before the anchor and image
      *     string $image_after Any HTML to be included after the anchor and image
      *     array $image_attrs An array of key value pairs where the key is the attribute and the value is the value
-	 * 	int $count The number of photos to output
-	 * }
+     *     int $count The number of photos to output
+     * }
      */
     public static function output_latest_epa_photos( $args = array() ) {
         $defaults = array(
