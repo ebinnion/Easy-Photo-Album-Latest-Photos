@@ -162,32 +162,35 @@ class Latest_Easy_Photo_Album {
 	 * 	int $count The number of photos to output
 	 * }
      */
-    public static function output_latest_epa_photos( $config = array() ) {
-        $defaults = array();
-        $defaults['container']       = isset( $config['container'] ) ? $config['container'] : 'div';
-        $defaults['container_attrs'] = isset( $config['container_attrs'] ) ? self::expand_attrs( $config['container_attrs'] ) : self::expand_attrs( array( 'class' => 'latest-photos' ) );
-        $defaults['image_before']    = isset( $config['image_before'] ) ? $config['image_before'] : '';
-        $default['image_after']      = isset( $config['image_after'] ) ? $config['image_after'] : '';
-        $defaults['image_attrs']     = isset( $config['image_attrs'] ) ? $config['image_attrs'] : array( 'class' => 'alignleft' );
-        $defaults['count']           = isset( $config['count'] ) ? $config['count'] : 10;
+    public static function output_latest_epa_photos( $args = array() ) {
+        $defaults = array(
+                'container' => 'div',
+                'container_attrs' => array( 'class' => 'latest-photos' ),
+                'image_attrs' => array( 'class' => 'alignleft' ),
+                'image_before' => '',
+                'image_after' => '',
+                'count' => 10
+        );
 
-        $photos = self::get_latest_epa_ids( $defaults['count'] );
+        $args = wp_parse_args( $args, $defaults  );
+
+        $photos = self::get_latest_epa_ids( $args['count'] );
 
         if( ! empty( $photos ) ) {
-            echo "<{$defaults['container']} {$defaults['container_attrs']}>";
+            echo "<{$args['container']} {$args['container_attrs']}>";
 
             foreach( $photos as $photo ) {
-                echo $defaults['image_before'];
+                echo $args['image_before'];
                     $full = wp_get_attachment_image_src( $photo, 'full' );
-                    echo $defaults['image_before'];
+                    echo $args['image_before'];
                     echo "<a href='{$full[0]}' data-lightbox='image-$photo'>";
-                        echo wp_get_attachment_image( $photo, 'thumbnail', false, $defaults['image_attrs'] );
+                        echo wp_get_attachment_image( $photo, 'thumbnail', false, $args['image_attrs'] );
                     echo "</a>";
-                    echo $defaults['image_after'];
-                echo $default['image_after'];
+                    echo $args['image_after'];
+                echo $args['image_after'];
             }
 
-            echo "</{$defaults['container']}>";
+            echo "</{$args['container']}>";
         }
     }
 }
